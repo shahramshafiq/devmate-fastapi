@@ -1,0 +1,8 @@
+fastapi==0.141.1
+httpx==0.28.1
+nemoguardrails==0.24.0
+openai==3.8.0
+pydantic==2.13.5
+pydantic_settings==2.15.0
+uvicorn==0.52.4
+valkey==6.1.1
