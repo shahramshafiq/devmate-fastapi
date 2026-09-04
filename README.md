@@ -6,26 +6,26 @@ This project builds directly on an earlier one, the Event Processing System (Fas
 
 ## Features
 
-- **Chat** — `POST /chat`, a normal request/response conversation with the assistant
-- **Streaming** — `GET /chat/stream`, the same conversation delivered token by token over Server-Sent Events
-- **Tool calling** — the model decides for itself when it needs help, and can reach for:
+- **Chat**: `POST /chat`, a normal request/response conversation with the assistant
+- **Streaming**: `GET /chat/stream`, the same conversation delivered token by token over Server-Sent Events
+- **Tool calling**: the model decides for itself when it needs help, and can reach for:
   - a date/time tool, for "today," "tomorrow," or "3 days from now"
   - a Tavily web search tool, for anything current or outside its own knowledge
   - a to-do list tool (add, list, complete, delete), stored per user
 - **Memory**
   - short-term: the last 10 turns of a conversation, kept in Valkey
   - long-term: durable facts about a user (preferences, habits), extracted automatically after each turn and kept in a JSON file per user
-- **Guardrails** — NeMo Guardrails checks messages on the way in and replies on the way out, and has held up against 5 jailbreak attempts and a tool-result prompt injection test
-- **Cost tracking** — every reply reports its own token usage and dollar cost, plus a running total for the session
+- **Guardrails**: NeMo Guardrails checks messages on the way in and replies on the way out, and has held up against 5 jailbreak attempts and a tool-result prompt injection test
+- **Cost tracking**: every reply reports its own token usage and dollar cost, plus a running total for the session
 
 ## Tech stack
 
-- [FastAPI](https://fastapi.tiangolo.com/) — web framework
-- [OpenAI Python SDK](https://github.com/openai/openai-python) — the model, via Chat Completions
-- [Valkey](https://valkey.io/) — short-term conversation memory
-- [httpx](https://www.python-httpx.org/) — the shared async client used for Tavily calls
-- [NeMo Guardrails](https://github.com/NVIDIA-NeMo/Guardrails) — input/output guardrails
-- [Pydantic](https://docs.pydantic.dev/) / `pydantic-settings` — request validation and configuration
+- [FastAPI](https://fastapi.tiangolo.com/): web framework
+- [OpenAI Python SDK](https://github.com/openai/openai-python): the model, via Chat Completions
+- [Valkey](https://valkey.io/): short-term conversation memory
+- [httpx](https://www.python-httpx.org/): the shared async client used for Tavily calls
+- [NeMo Guardrails](https://github.com/NVIDIA-NeMo/Guardrails): input/output guardrails
+- [Pydantic](https://docs.pydantic.dev/) / `pydantic-settings`: request validation and configuration
 
 ## Project structure
 
@@ -54,7 +54,7 @@ tests/
 
 ### Prerequisites
 
-- **Python 3.12.** Not 3.14 — NeMo Guardrails' own dependencies don't support 3.14 yet (its `requires_python` explicitly excludes it), and importing it will crash on a newer interpreter.
+- **Python 3.12.** Not 3.14: NeMo Guardrails' own dependencies don't support 3.14 yet (its `requires_python` explicitly excludes it), and importing it will crash on a newer interpreter.
 - A running Valkey (or Redis) instance
 - An [OpenAI API key](https://platform.openai.com/)
 - A [Tavily API key](https://tavily.com/) (free tier is fine)
@@ -124,8 +124,8 @@ A request to `/chat` reads recent conversation history from Valkey and any known
 
 ## Testing
 
-- **Postman** — every endpoint was tested interactively during development. An exported collection file isn't in the repo yet.
-- **`tests/manual_test_requests.py`** — a runnable script covering all 5 build phases (basic chat, streaming, tools, memory, guardrails). It makes real calls to OpenAI (and Tavily, for phase 3), so it costs real money to run, it's not a mocked test suite. Run everything with `python tests/manual_test_requests.py`, or just one phase with `python tests/manual_test_requests.py --phase 3`.
+- **Postman**: every endpoint was tested interactively during development. An exported collection file isn't in the repo yet.
+- **`tests/manual_test_requests.py`**: a runnable script covering all 5 build phases (basic chat, streaming, tools, memory, guardrails). It makes real calls to OpenAI (and Tavily, for phase 3), so it costs real money to run, it's not a mocked test suite. Run everything with `python tests/manual_test_requests.py`, or just one phase with `python tests/manual_test_requests.py --phase 3`.
 - The tool-result injection test needs one temporary line added to `app/tools/tavily_tool.py`, explained in the script's own output.
 
 ## Known limitations
